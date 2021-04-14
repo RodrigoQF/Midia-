@@ -1,12 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'PaginaLogin.dart';
+
 class CadastroPage extends StatefulWidget {
   @override
   _CadastroPageState createState() => _CadastroPageState();
 }
 
 class _CadastroPageState extends State<CadastroPage> {
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,13 +87,26 @@ class _CadastroPageState extends State<CadastroPage> {
               ButtonTheme(
                 height: 60.0,
                 child: RaisedButton(
-                  onPressed: () => {},
+                  color: Color(0xFF947bd3),
+                  onPressed: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    ),
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text("Cadastro Realizado com Sucesso"),
+                      ),
+                    ),
+                  },
                   child: Text(
                     "Realizar Cadastrar",
                     style: TextStyle(color: Colors.white, fontSize: 20),
 
+
                   ),
-                  color: Colors.deepOrange,
+
                 ),
               )
             ],
