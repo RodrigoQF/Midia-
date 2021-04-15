@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:midiaplus/Paginas/PaginaCadastro.dart';
 
 import 'Paginas/PaginaLogin.dart';
+import 'package:http/http.dart' as http;
 
 
 
