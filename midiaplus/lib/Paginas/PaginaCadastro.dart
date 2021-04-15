@@ -20,20 +20,44 @@ class _CadastroPageState extends State<CadastroPage> {
   TextEditingController cidade = new TextEditingController();
   TextEditingController estado = new TextEditingController();
 
-  Future<List> senddata() async {
-    final response = await http.post(Uri.https("http://192.168.56.1/flutter/listar_usuario.php", ''),  body: {
+Future<http.Response> createAlbum(String Jorge) {
+  return http.post(
+    Uri.https('http://192.168.56.1/flutter/listar_usuario.php', 'albums'),
 
+    body: jsonEncode(<String nome_completo, String username, String senha, String data_nascimento, String cidade, String estado>{
       "nome_completo": nome_completo.text,
       "username": username.text,
       "senha":senha.text,
       "data_nascimento":data_nascimento.text,
       "cidade":cidade.text,
       "estado":estado.text,
-    });
-    var datauser = json.decode(response.body);
+    }),
+  );
+  var datauser = json.decode(response.body);
     return datauser;
-  }
+}
 
+class Album {
+  final String nome_completo;
+  final String username;
+  final String senha;
+  final String data_nascimento;
+  final String cidade;
+  final String estado;
+
+  Album({this.nome_completo, this.username, this.senha, this.data_nascimento, this.cidade, this.estado});
+
+  factory Album.fromJson(Map<String, dynamic> json) {
+    return Album(
+      title: json['nome_completo'],
+      title: json['username'],
+      title: json['senha'],
+      title: json['data_nascimento'],
+      title: json['cidade'],
+      title: json['estado'],
+    );
+  }
+}
 
   @override
   Widget build(BuildContext context) {
