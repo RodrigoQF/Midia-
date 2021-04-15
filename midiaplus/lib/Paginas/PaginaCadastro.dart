@@ -11,32 +11,6 @@ class CadastroPage extends StatefulWidget {
   _CadastroPageState createState() => _CadastroPageState();
 }
 
-
-class _CadastroPageState extends State<CadastroPage> {
-  TextEditingController nome_completo = new TextEditingController();
-  TextEditingController username = new TextEditingController();
-  TextEditingController senha = new TextEditingController();
-  TextEditingController data_nascimento = new TextEditingController();
-  TextEditingController cidade = new TextEditingController();
-  TextEditingController estado = new TextEditingController();
-
-Future<http.Response> createAlbum(String Jorge) {
-  return http.post(
-    Uri.https('http://192.168.56.1/flutter/listar_usuario.php', 'albums'),
-
-    body: jsonEncode(<String nome_completo, String username, String senha, String data_nascimento, String cidade, String estado>{
-      "nome_completo": nome_completo.text,
-      "username": username.text,
-      "senha":senha.text,
-      "data_nascimento":data_nascimento.text,
-      "cidade":cidade.text,
-      "estado":estado.text,
-    }),
-  );
-  var datauser = json.decode(response.body);
-    return datauser;
-}
-
 class Album {
   final String nome_completo;
   final String username;
@@ -49,15 +23,43 @@ class Album {
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
-      title: json['nome_completo'],
-      title: json['username'],
-      title: json['senha'],
-      title: json['data_nascimento'],
-      title: json['cidade'],
-      title: json['estado'],
+      nome_completo: json['nome_completo'],
+      username: json['username'],
+      senha: json['senha'],
+      data_nascimento: json['data_nascimento'],
+      cidade: json['cidade'],
+      estado: json['estado'],
     );
   }
 }
+
+class _CadastroPageState extends State<CadastroPage> {
+  TextEditingController nome_completo = new TextEditingController();
+  TextEditingController username = new TextEditingController();
+  TextEditingController senha = new TextEditingController();
+  TextEditingController data_nascimento = new TextEditingController();
+  TextEditingController cidade = new TextEditingController();
+  TextEditingController estado = new TextEditingController();
+
+
+
+Future<http.Response> createAlbum(String Jorge) {
+  return http.post(
+    Uri.https('http://192.168.56.1/flutter/listar_usuario.php', 'albums'),
+
+    body: jsonEncode(<String , String >{
+      "nome_completo": nome_completo.text,
+      "username": username.text,
+      "senha":senha.text,
+      "data_nascimento":data_nascimento.text,
+      "cidade":cidade.text,
+      "estado":estado.text,
+    }),
+  );
+
+}
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +149,8 @@ class Album {
                 child: RaisedButton(
                   color: Color(0xFF947bd3),
                   onPressed: () => {
-                    senddata(),
+
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => LoginPage()),
