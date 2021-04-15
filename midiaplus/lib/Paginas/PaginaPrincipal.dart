@@ -14,7 +14,7 @@ class _PaginaPrincipalState extends State<PaginaPrincipal> {
 
         centerTitle: true,
         backgroundColor: Colors.deepPurpleAccent,
-        title: Text("Tela de Login"),
+        title: Text("Pagina Principal"),
 
 
       )

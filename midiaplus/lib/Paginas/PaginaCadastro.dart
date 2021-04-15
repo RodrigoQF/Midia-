@@ -9,10 +9,6 @@ class CadastroPage extends StatefulWidget {
 }
 
 class _CadastroPageState extends State<CadastroPage> {
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,10 +99,7 @@ class _CadastroPageState extends State<CadastroPage> {
                   child: Text(
                     "Realizar Cadastrar",
                     style: TextStyle(color: Colors.white, fontSize: 20),
-
-
                   ),
-
                 ),
               )
             ],
