@@ -11,27 +11,6 @@ class CadastroPage extends StatefulWidget {
   _CadastroPageState createState() => _CadastroPageState();
 }
 
-class Album {
-  final String nome_completo;
-  final String username;
-  final String senha;
-  final String data_nascimento;
-  final String cidade;
-  final String estado;
-
-  Album({this.nome_completo, this.username, this.senha, this.data_nascimento, this.cidade, this.estado});
-
-  factory Album.fromJson(Map<String, dynamic> json) {
-    return Album(
-      nome_completo: json['nome_completo'],
-      username: json['username'],
-      senha: json['senha'],
-      data_nascimento: json['data_nascimento'],
-      cidade: json['cidade'],
-      estado: json['estado'],
-    );
-  }
-}
 
 class _CadastroPageState extends State<CadastroPage> {
   TextEditingController nome_completo = new TextEditingController();
@@ -41,23 +20,20 @@ class _CadastroPageState extends State<CadastroPage> {
   TextEditingController cidade = new TextEditingController();
   TextEditingController estado = new TextEditingController();
 
+  /*Future<List> senddata() async {
+    final response = await http.post("http://192.168.56.1/flutter/listar_usuario.php",   body: {
 
-
-Future<http.Response> createAlbum(String Jorge) {
-  return http.post(
-    Uri.https('http://192.168.56.1/flutter/listar_usuario.php', 'albums'),
-
-    body: jsonEncode(<String , String >{
       "nome_completo": nome_completo.text,
       "username": username.text,
       "senha":senha.text,
       "data_nascimento":data_nascimento.text,
       "cidade":cidade.text,
       "estado":estado.text,
-    }),
-  );
-
-}
+    });
+    var datauser = json.decode(response.body);
+    return datauser;
+  }
+  */
 
 
 
@@ -149,8 +125,7 @@ Future<http.Response> createAlbum(String Jorge) {
                 child: RaisedButton(
                   color: Color(0xFF947bd3),
                   onPressed: () => {
-
-
+                    //senddata(),
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => LoginPage()),
