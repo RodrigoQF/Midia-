@@ -20,9 +20,12 @@ class _PaginaPrincipalState extends State<PaginaPrincipal> {
 
         backgroundColor: Colors.deepPurpleAccent,
         appBar: AppBar(
+
           backgroundColor: Colors.deepPurple,
           title: const Text('MidiaPlus'),
+
           bottom: TabBar(
+
 
             labelColor: Colors.white,
             // These are the widgets to put in each tab in the tab bar.
@@ -36,6 +39,8 @@ class _PaginaPrincipalState extends State<PaginaPrincipal> {
               top: false,
               bottom: false,
               child: Builder(
+
+
                 // This Builder is needed to provide a BuildContext that is "inside"
                 // the NestedScrollView, so that sliverOverlapAbsorberHandleFor() can
                 // find the NestedScrollView.
@@ -45,9 +50,11 @@ class _PaginaPrincipalState extends State<PaginaPrincipal> {
                   );
                 },
               ),
+
             );
           }).toList(),
         ),
+
       ),
     );
   }
