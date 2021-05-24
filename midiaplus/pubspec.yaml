@@ -44,6 +44,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/imagens/logo.png
+    - assets/imagens/avatar01.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
