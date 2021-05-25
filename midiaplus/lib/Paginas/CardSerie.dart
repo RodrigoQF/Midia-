@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:midiaplus/Paginas/Insert/InsertSerie.dart';
+
+import 'botao.dart';
 
 class CardSerie extends StatefulWidget {
   @override
@@ -20,6 +23,8 @@ class _CardFilmeState extends State<CardSerie> {
     final map = json.decode(response.body);
     final itens = map ["result"];
     this.dados = itens;
+
+
 
 
   }
@@ -43,8 +48,8 @@ class _CardFilmeState extends State<CardSerie> {
         children: <Widget>[
           Container(
 
-              height: 230.0,
-              width: 340.0,
+              height: 600.0,
+              width: 400.0,
               child: new ListView.builder(
                   itemCount: this.dados != null ? this.dados.length : 0,
                   itemBuilder: (context, i){
@@ -52,7 +57,7 @@ class _CardFilmeState extends State<CardSerie> {
                     print(item);
 
                     return new Container(
-                      margin: EdgeInsets.only(bottom: 15, left: 60, top: 10),
+                      margin: EdgeInsets.only(bottom: 15, left: 10, top: 10),
                       child: Stack(
                         children: <Widget>[
                           Image(
@@ -129,6 +134,19 @@ class _CardFilmeState extends State<CardSerie> {
                                     ),
                                   ],
                                 ),
+                                GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  CadastroSerie()));
+                                    },
+                                    child: Button(
+                                      btnText: "Inserir Serie",
+
+
+                                    )
+                                ),
 
                               ],
                             ),
@@ -140,6 +158,7 @@ class _CardFilmeState extends State<CardSerie> {
               )
 
           )
+
         ],
       ),
     );

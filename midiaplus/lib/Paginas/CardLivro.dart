@@ -4,6 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'Insert/InsertLivro.dart';
+import 'botao.dart';
+
 class CardLivro extends StatefulWidget {
   @override
   _CardLivroState createState() => _CardLivroState();
@@ -44,8 +47,8 @@ class _CardLivroState extends State<CardLivro> {
 
           Container(
 
-              height: 230.0,
-              width: 340.0,
+              height: 600.0,
+              width: 400.0,
               child: new ListView.builder(
                   itemCount: this.dados != null ? this.dados.length : 0,
                   itemBuilder: (context, i){
@@ -53,7 +56,7 @@ class _CardLivroState extends State<CardLivro> {
                     print(item);
 
                     return new Container(
-                      margin: EdgeInsets.only(bottom: 15, left: 60, top: 10),
+                      margin: EdgeInsets.only(bottom: 15, left: 40, top: 10),
 
                       child: Stack(
                         children: <Widget>[
@@ -132,7 +135,22 @@ class _CardLivroState extends State<CardLivro> {
                                     ),
                                   ],
                                 ),
+                                SizedBox(
+                                  height: 50,
+                                ),
+                                GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  CadastroLivro()));
+                                    },
+                                    child: Button(
+                                      btnText: "Inserir Livro",
 
+
+                                    )
+                                ),
                               ],
                             ),
                           ),

@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'botao.dart';
+import 'package:midiaplus/Paginas/CardFilme.dart';
+import '../botao.dart';
 
 import 'package:midiaplus/Paginas/PaginaPrincipal.dart';
 
@@ -186,20 +189,36 @@ class _CadastroFilmeState extends State<CadastroFilme> {
           "ano_lancamento": ano_lancamentotxt.text,
           "imagem": imagemtxt.text,
         });
-    messagem();
+    final map = json.decode(response.body);
+    final res = map["message"];
+    messagem(res);
   }
 
-  messagem(){
+  messagem(res){
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Filme Cadastrado com Sucesso"),
+        title: Text(res),
       ),
     );
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => PaginaPrincipal()),
-    );
+
+    if(res == 'Inserido com Sucesso'){
+      titulotxt.text = "";
+      diretortxt.text = "";
+      elenco_principaltxt.text = "";
+      paistxt.text = "";
+      ano_lancamentotxt.text = "";
+      imagemtxt.text = "";
+      Navigator.push(
+
+        context,
+        MaterialPageRoute(builder: (context) => CardFilme()),
+      );
+    }
+    if(res == 'Preencha os Dados'){
+
+    }
+
 
 
   }

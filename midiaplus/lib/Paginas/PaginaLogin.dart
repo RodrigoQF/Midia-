@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'PaginaCadastro.dart';
 import 'PaginaPrincipal.dart';
+import 'package:http/http.dart' as http;
+import 'botao.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -9,94 +13,228 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+  bool _toggleVisibility = true;
 
-        centerTitle: true,
-        backgroundColor: Colors.deepPurpleAccent,
-        title: Text("Pagina de Login"),
+  var usernametxt = new TextEditingController();
+  var senhatxt = new TextEditingController();
 
+  var dados;
+  var seguro = true;
 
-      ),
-        backgroundColor: Colors.deepPurpleAccent,
-        body:
-        Padding(
-        padding: EdgeInsets.all(10),
-         child: Center(
+  String _username;
+  String _senha;
 
-          child: Column(
-         crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Container(
-              child: Image.asset('assets/imagens/logo.png',
-                  height: 100,
-                width: 100,),
-            ),
-            TextFormField(
-              autofocus: true,
-              keyboardType: TextInputType.text,
-              style: new TextStyle(color: Colors.white, fontSize: 15),
-              decoration: InputDecoration(
-                  labelText: "Login",
-                  labelStyle: TextStyle (color: Colors.white, fontSize: 20)),
-            ),
-            TextFormField(
-              autofocus: true,
-              obscureText: true,
-              keyboardType: TextInputType.text,
-              style: new TextStyle(color: Colors.white, fontSize: 15, fontFamily: "Rock Salt"),
-              decoration: InputDecoration(
-                  labelText: "Senha",
-                  labelStyle: TextStyle (color: Colors.white, fontSize: 20)),
-            ),
-            ButtonTheme(
-
-
-            height: 60.0,
-              child: RaisedButton(
-
-                  color: Color(0xFF5947bd3),
-              onPressed: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PaginaPrincipal()),
-                ),
-              },
-              child: Text(
-              "Entrar",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-              )
-            )
-            ),
-            Divider(),
-            ButtonTheme(
-              height: 60,
-                child: RaisedButton(
-                  color: Color(0xFF947bd3),
-                  onPressed: ()=>{
-                  Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CadastroPage()),
-                  ),
-
-                  },
-                  child: Text(
-                    "Fazer Cadastro",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-
-
-                  ),
-                ),
-            ),
-
-          ]
-          ),
-          ),
+  Widget _usernametxt() {
+    return TextFormField(
+      controller: usernametxt,
+      decoration: InputDecoration(
+        hintText: "username",
+        hintStyle: TextStyle(
+          color: Color(0xFFBDC2CB),
+          fontSize: 18.0,
         ),
-
+      ),
+      onSaved: (String username) {
+        _username = username.trim();
+      },
+      validator: (String username) {
+        String errorMessage;
+        if (username.isEmpty) {
+          errorMessage = "O nome é requerido";
+        }
+        // if(username.length > 8 ){
+        //   errorMessage = "Your username is too short";
+        // }
+        return errorMessage;
+      },
     );
   }
+  Widget _senhatxt() {
+    return TextFormField(
+      controller: senhatxt,
+      decoration: InputDecoration(
+        hintText: "senha",
+        hintStyle: TextStyle(
+          color: Color(0xFFBDC2CB),
+          fontSize: 18.0,
+        ),
+      ),
+      onSaved: (String senha) {
+        _senha = senha.trim();
+      },
+      validator: (String senha) {
+        String errorMessage;
+        if (senha.isEmpty) {
+          errorMessage = "O nome é requerido";
+        }
+        // if(username.length > 8 ){
+        //   errorMessage = "Your username is too short";
+        // }
+        return errorMessage;
+      },
+    );
+  }
+
+  /*void _inserirDados() async {
+    final response = await http.post(
+        Uri.parse("http://192.168.178.1/flutter/inserirusuario.php"),
+        body: {
+          "username": usernametxt.text,
+          "senha": senhatxt.text,
+
+        });
+    messagem();
+  }
+*/
+  messagem(){
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Cadastro Realizado com Sucesso"),
+      ),
+    );
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
+
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    void MensagemDadosIncorretos() {
+      var alert = new AlertDialog(
+        title: new Text("Dados Incorretos"),
+        content: new Text(
+            "Usuário ou Senha incorretos"),
+      );
+      showDialog(builder: (context) => alert, context: context);
+    }
+
+    Future<String> Login(String username, String senha) async {
+      var response = await http.get(
+          Uri.parse(
+              "http://192.168.178.1/flutter/login.php?usuario=${username}&senha=${senha}"),
+          headers: {"Accept": "application/json"});
+
+      //print(response.body);
+
+      var obj = json.decode(response.body);
+      var msg = obj["message"];
+      if(msg == "Dados incorretos!"){
+        MensagemDadosIncorretos();
+      }else{
+        dados = obj['result'];
+      }
+
+    }
+    VerificarDados(String username, String senha) {
+      if (dados[0]['username'] == username && dados[0]['senha'] == senha) {
+
+        var route = new MaterialPageRoute(
+          builder: (BuildContext context) =>
+          new PaginaPrincipal(),
+        );
+        Navigator.of(context).push(route);
+      } else {
+        MensagemDadosIncorretos();
+      }
+
+    }
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.grey.shade100,
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          child: Form(
+
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image(
+                  image: AssetImage("assets/imagens/logo.png"),
+                  height: 120.0,
+                  width: 120.0,
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Card(
+                  elevation: 5.0,
+                  child: Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Column(
+                      children: <Widget>[
+                        _usernametxt(),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        _senhatxt(),
+                      ],
+                    ),
+                  ),
+                ),
+                Divider(
+                  height: 20.0,
+                ),
+
+                GestureDetector(
+                    onTap: () {
+                      Login (usernametxt.text, senhatxt.text);
+                      VerificarDados(usernametxt.text, senhatxt.text);
+
+                    },
+                    child: Button(
+                      btnText: "Login",
+
+
+                    )
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+
+
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "Não possui cadastro?",
+                      style: TextStyle(
+                          color: Color(0xFFBDC2CB),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0),
+                    ),
+                    SizedBox(width: 10.0),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    CadastroPage()));
+                      },
+                      child: Text(
+                        "Cadastrar",
+                        style: TextStyle(
+                            color: Colors.blueAccent,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+
+  }
+
 }
+

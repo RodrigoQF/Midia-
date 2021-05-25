@@ -205,20 +205,36 @@ class _CadastroPageState extends State<CadastroPage> {
             "cidade": cidadetxt.text,
             "estado": estadotxt.text,
           });
-      messagem();
+      final map = json.decode(response.body);
+      final res = map["message"];
+      messagem(res);
     }
 
-    messagem(){
+    messagem(res){
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
-        title: Text("Cadastro Realizado com Sucesso"),
+        title: Text(res),
       ),
       );
-      Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => LoginPage()),
-      );
+
+      if(res == 'Inserido com Sucesso'){
+        nome_completotxt.text = "";
+        usernametxt.text = "";
+        senhatxt.text = "";
+        data_nascimentotxt.text = "";
+        cidadetxt.text = "";
+        estadotxt.text = "";
+        Navigator.push(
+
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      }
+      if(res == 'Preencha os Dados'){
+
+      }
+
 
 
     }

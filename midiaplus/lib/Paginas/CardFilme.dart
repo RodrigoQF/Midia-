@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'file:///C:/Users/rodri/AndroidStudioProjects/midiaplus/lib/Paginas/InsertFilme.dart';
+import 'Insert/InsertFilme.dart';
 import 'dart:async';
 
 import 'package:midiaplus/Paginas/PaginaPrincipal.dart';
@@ -52,8 +52,8 @@ class _CardFilmeState extends State<CardFilme> {
         children: <Widget>[
           Container(
 
-            height: 230.0,
-            width: 340.0,
+            height: 600.0,
+            width: 400.0,
             child: new ListView.builder(
               itemCount: this.dados != null ? this.dados.length : 0,
               itemBuilder: (context, i){
@@ -61,7 +61,7 @@ class _CardFilmeState extends State<CardFilme> {
                 print(item);
 
                 return new Container(
-                  margin: EdgeInsets.only(bottom: 15, left: 60, top: 10),
+                  margin: EdgeInsets.only(bottom: 15, left: 20, top: 10),
                   child: Stack(
                     children: <Widget>[
                       Image(
@@ -161,6 +161,7 @@ class _CardFilmeState extends State<CardFilme> {
                     ],
                   ),
                 );
+
               }
             )
 
