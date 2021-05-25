@@ -1,35 +1,39 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:midiaplus/Paginas/CardFilme.dart';
+import 'package:midiaplus/Paginas/CardLivro.dart';
+import 'package:midiaplus/Paginas/CardSerie.dart';
 
-import 'CardFilme.dart';
 
-class PaginaPrincipal extends StatefulWidget {
-  @override
-  _PaginaPrincipalState createState() => _PaginaPrincipalState();
-}
-
-class _PaginaPrincipalState extends State<PaginaPrincipal> {
+class PaginaPrincipal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.deepPurpleAccent,
-        title: Text("Pagina Principal"),
-      ),
-      backgroundColor: Colors.deepPurpleAccent,
-      body: Padding(
-        padding: EdgeInsets.all(10),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              CardFilme()
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          backgroundColor: Color(0xFF280031),
+          appBar: AppBar(
+            backgroundColor: Colors.deepPurpleAccent,
+            bottom: TabBar(
+
+              tabs: [
+
+                Tab(text:"Filme",),
+              Tab(text:"Serie",),
+            Tab(text:"Livro",)
+              ],
+            ),
+            title: Text('Tabs Demo'),
+          ),
+          body: TabBarView(
+            children: [
+              CardFilme(),
+              CardSerie(),
+              CardLivro(),
             ],
-          )
-        )
-      )
-
+          ),
+        ),
+      ),
     );
-
-}
   }
+}

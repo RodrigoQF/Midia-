@@ -4,7 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'file:///C:/Users/rodri/AndroidStudioProjects/midiaplus/lib/Paginas/InsertFilme.dart';
 import 'dart:async';
+
+import 'package:midiaplus/Paginas/PaginaPrincipal.dart';
+
+import 'botao.dart';
 class CardFilme extends StatefulWidget {
 
   @override
@@ -25,6 +30,8 @@ class _CardFilmeState extends State<CardFilme> {
 
 
   }
+
+
 
 
   @override
@@ -54,6 +61,7 @@ class _CardFilmeState extends State<CardFilme> {
                 print(item);
 
                 return new Container(
+                  margin: EdgeInsets.only(bottom: 15, left: 60, top: 10),
                   child: Stack(
                     children: <Widget>[
                       Image(
@@ -65,8 +73,8 @@ class _CardFilmeState extends State<CardFilme> {
                       Positioned(
                         left: 0.0,
                         bottom: 0.0,
-                        width: 340.0,
-                        height: 60.0,
+                        width: 240.0,
+                        height: 50.0,
                         child: Container(
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
@@ -129,6 +137,22 @@ class _CardFilmeState extends State<CardFilme> {
                                   ],
                                 ),
                               ],
+                            ),
+                            SizedBox(
+                              height: 50.0,
+                            ),
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              CadastroFilme()));
+                                },
+                                child: Button(
+                                  btnText: "Inserir Filme",
+
+
+                                )
                             ),
 
                           ],

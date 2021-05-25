@@ -45,6 +45,17 @@ flutter:
   assets:
     - assets/imagens/logo.png
     - assets/imagens/avatar01.png
+    - assets/imagens/stranger.png
+    - assets/imagens/divergente.png
+    - assets/imagens/ficciones.png
+    - assets/imagens/jogosvorazes.png
+    - assets/imagens/memorias.png
+    - assets/imagens/percy.png
+    - assets/imagens/senhordos.png
+    - assets/imagens/principe.png
+    - assets/imagens/harry.png
+    - assets/imagens/nemo.png
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
