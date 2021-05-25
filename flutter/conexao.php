@@ -1,18 +1,18 @@
 <?php
 
-$username="root";//change username 
-$password=""; //change password
-$host="localhost";
-$db_name="midia+"; //change databasename
+$banco = 'midia+';
+$host = 'localhost';
+$usuario = 'root';
+$senha = '';
 
-putenv("TZ=America/Sao_Paulo");
+date_default_timezone_set('America/Sao_Paulo');
 
-$connect=mysqli_connect($host,$username,$password,$db_name);
-
-if(!$connect)
-{
-	echo json_encode("Connection Failed");
+try{
+    $pdo = new PDO ("mysql:dbname=$banco;host=$host;charset=utf8", "$usuario", "$senha");
+    
 }
+    catch (Exception $e) {
+        echo "Erro ao conectar com o banco de dados".$e;  
+    }
 
 ?>
-
