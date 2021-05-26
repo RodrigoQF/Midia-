@@ -9,6 +9,7 @@ import 'dart:async';
 
 import 'package:midiaplus/Paginas/PaginaPrincipal.dart';
 
+import 'PaginaCadastro.dart';
 import 'botao.dart';
 class CardFilme extends StatefulWidget {
 
@@ -64,12 +65,22 @@ class _CardFilmeState extends State<CardFilme> {
                   margin: EdgeInsets.only(bottom: 15, left: 20, top: 10),
                   child: Stack(
                     children: <Widget>[
-                      Image(
-                        image: AssetImage('assets/imagens/' + item['imagem'],
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      CadastroPage()));
+                        },
+                        child: Image(
 
+                          image: AssetImage('assets/imagens/' + item['imagem'],
+
+                          ),
+                          fit: BoxFit.cover,
                         ),
-                        fit: BoxFit.cover,
                       ),
+
                       Positioned(
                         left: 0.0,
                         bottom: 0.0,
@@ -129,10 +140,6 @@ class _CardFilmeState extends State<CardFilme> {
                                     ),
                                     SizedBox(
                                       width: 10.0,
-                                    ),
-                                    Text(
-                                      item["pais"],
-                                      style: TextStyle(color: Colors.grey),
                                     ),
                                   ],
                                 ),

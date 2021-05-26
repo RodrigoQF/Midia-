@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:midiaplus/Paginas/CardFilme.dart';
 import 'package:midiaplus/Paginas/CardLivro.dart';
@@ -23,7 +24,8 @@ class PaginaPrincipal extends StatelessWidget {
             Tab(text:"Livro",)
               ],
             ),
-            title: Text('Tabs Demo'),
+            title: Text('MidiaPlus'),
+
           ),
           body: TabBarView(
             children: [

@@ -194,6 +194,7 @@ class _CadastroFilmeState extends State<CadastroFilme> {
     messagem(res);
   }
 
+
   messagem(res){
     showDialog(
       context: context,
@@ -212,7 +213,7 @@ class _CadastroFilmeState extends State<CadastroFilme> {
       Navigator.push(
 
         context,
-        MaterialPageRoute(builder: (context) => CardFilme()),
+        MaterialPageRoute(builder: (context) => PaginaPrincipal()),
       );
     }
     if(res == 'Preencha os Dados'){
@@ -222,7 +223,6 @@ class _CadastroFilmeState extends State<CadastroFilme> {
 
 
   }
-
 
 
   @override

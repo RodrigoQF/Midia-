@@ -42,9 +42,7 @@ class _LoginPageState extends State<LoginPage> {
         if (username.isEmpty) {
           errorMessage = "O nome é requerido";
         }
-        // if(username.length > 8 ){
-        //   errorMessage = "Your username is too short";
-        // }
+
         return errorMessage;
       },
     );
@@ -67,25 +65,12 @@ class _LoginPageState extends State<LoginPage> {
         if (senha.isEmpty) {
           errorMessage = "O nome é requerido";
         }
-        // if(username.length > 8 ){
-        //   errorMessage = "Your username is too short";
-        // }
+
         return errorMessage;
       },
     );
   }
 
-  /*void _inserirDados() async {
-    final response = await http.post(
-        Uri.parse("http://192.168.178.1/flutter/inserirusuario.php"),
-        body: {
-          "username": usernametxt.text,
-          "senha": senhatxt.text,
-
-        });
-    messagem();
-  }
-*/
   messagem(){
     showDialog(
       context: context,
@@ -115,18 +100,14 @@ class _LoginPageState extends State<LoginPage> {
     Future<String> Login(String username, String senha) async {
       var response = await http.get(
           Uri.parse(
-              "http://192.168.178.1/flutter/login.php?usuario=${username}&senha=${senha}"),
+              "http://192.168.178.1/flutter/login.php?username=${username}&senha=${senha}"),
           headers: {"Accept": "application/json"});
-
-      //print(response.body);
-
-      var obj = json.decode(response.body);
-      var msg = obj["message"];
-      if(msg == "Dados incorretos!"){
-        MensagemDadosIncorretos();
-      }else{
-        dados = obj['result'];
-      }
+      print(response.body);
+      setState(() {
+        var convertDataToJson = json.decode(response.body);
+        dados = convertDataToJson['result'];
+        print(dados['username']);
+      });
 
     }
     VerificarDados(String username, String senha) {
