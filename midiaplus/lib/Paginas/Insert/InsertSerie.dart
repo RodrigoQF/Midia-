@@ -253,6 +253,30 @@ class _CadastroSerieState extends State<CadastroSerie> {
 
   @override
   Widget build(BuildContext context) {
+    Future<String> VerificaTitulo(String titulo) async {
+      var response = await http.get(
+          Uri.parse(
+              "http://192.168.178.1/flutter/inserirserie.php?titulo=${titulo}"),
+          headers: {"Accept": "application/json"});
+      print(response.body);
+      setState(() {
+        var convertDataToJson = json.decode(response.body);
+        dados = convertDataToJson['result'];
+        print(dados['titulo']);
+      });
+
+    }
+    VerificarDados(String titulo) {
+      if (dados[0]['titulo'] == titulo) {
+
+        var route = new MaterialPageRoute(
+          builder: (BuildContext context) =>
+          message(res);
+        );
+        Navigator.of(context).push(route);
+      } 
+    }
+
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -313,6 +337,8 @@ class _CadastroSerieState extends State<CadastroSerie> {
 
                 GestureDetector(
                   onTap: () {
+                    VerificaTitulo();
+                    VerificarDados();
                     _inserirDados();
                   },
                   child: Button(
