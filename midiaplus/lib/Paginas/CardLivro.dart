@@ -17,6 +17,7 @@ class _CardLivroState extends State<CardLivro> {
   var buscar;
   var dados;
   var titulo, pais, imagem;
+  var carregando = false;
 
   _listarDados() async{
     final response = await http.get(Uri.parse("http://192.168.178.1/flutter/listarlivro.php"));
@@ -24,6 +25,12 @@ class _CardLivroState extends State<CardLivro> {
     final itens = map ["result"];
     this.dados = itens;
 
+
+    setState(() {
+      carregando = true;
+      this.dados = itens;
+
+    });
 
   }
 
@@ -49,7 +56,9 @@ class _CardLivroState extends State<CardLivro> {
 
               height: 600.0,
               width: 400.0,
-              child: new ListView.builder(
+              child: !carregando
+                  ? new LinearProgressIndicator()
+                  : new ListView.builder(
                   itemCount: this.dados != null ? this.dados.length : 0,
                   itemBuilder: (context, i){
                     final item = this.dados[i];

@@ -17,6 +17,7 @@ class _CardFilmeState extends State<CardSerie> {
   var buscar;
   var dados;
   var titulo, numero_temp, imagem;
+  var carregando = false;
 
   _listarDados() async{
     final response = await http.get(Uri.parse("http://192.168.178.1/flutter/listarserie.php"));
@@ -24,6 +25,12 @@ class _CardFilmeState extends State<CardSerie> {
     final itens = map ["result"];
     this.dados = itens;
 
+
+    setState(() {
+      carregando = true;
+      this.dados = itens;
+
+    });
 
 
 
@@ -50,7 +57,9 @@ class _CardFilmeState extends State<CardSerie> {
 
               height: 600.0,
               width: 400.0,
-              child: new ListView.builder(
+              child: !carregando
+                  ? new LinearProgressIndicator()
+                  : new ListView.builder(
                   itemCount: this.dados != null ? this.dados.length : 0,
                   itemBuilder: (context, i){
                     final item = this.dados[i];

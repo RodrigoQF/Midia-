@@ -102,12 +102,17 @@ class _LoginPageState extends State<LoginPage> {
           Uri.parse(
               "http://192.168.178.1/flutter/login.php?username=${username}&senha=${senha}"),
           headers: {"Accept": "application/json"});
-      print(response.body);
-      setState(() {
-        var convertDataToJson = json.decode(response.body);
-        dados = convertDataToJson['result'];
-        print(dados['username']);
-      });
+      //print(response.body);
+
+      var obj = json.decode(response.body);
+      var msg = obj ["messagem"];
+      if (msg == "Dados não encontrados!"){
+        MensagemDadosIncorretos();
+      }
+      else {
+        dados = obj ['result'];
+      }
+
 
     }
     VerificarDados(String username, String senha) {

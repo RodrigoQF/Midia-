@@ -6,6 +6,7 @@ import 'package:midiaplus/Paginas/CardSerie.dart';
 
 
 class PaginaPrincipal extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,6 +16,7 @@ class PaginaPrincipal extends StatelessWidget {
           backgroundColor: Color(0xFF280031),
           appBar: AppBar(
             backgroundColor: Colors.deepPurpleAccent,
+
             bottom: TabBar(
 
               tabs: [
@@ -34,6 +36,7 @@ class PaginaPrincipal extends StatelessWidget {
               CardLivro(),
             ],
           ),
+
         ),
       ),
     );
