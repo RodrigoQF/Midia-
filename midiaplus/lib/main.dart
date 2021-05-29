@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:midiaplus/Paginas/PaginaCadastro.dart';
 import 'package:midiaplus/Paginas/PaginaPrincipal.dart';
+import 'package:midiaplus/Paginas/SideBar/comentarios.dart';
+import 'package:midiaplus/Paginas/SideBar/usuarios.dart';
 
 import 'Paginas/PaginaLogin.dart';
 import 'package:http/http.dart' as http;
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget{
     return MaterialApp(
       title: 'Midia+',
       theme: ThemeData(primarySwatch: Colors.deepOrange),
-      home: LoginPage(),
+      home: ComentariosPage(),
 
     );
 

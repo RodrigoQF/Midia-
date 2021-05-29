@@ -3,18 +3,21 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:midiaplus/Paginas/CardSerie.dart';
-import '../botao.dart';
 
-import 'package:midiaplus/Paginas/PaginaPrincipal.dart';
-
-class CadastroSerie extends StatefulWidget {
+import 'Insert/insertComentario.dart';
+import 'botao.dart';
+class DadosSerie extends StatefulWidget {
   @override
-  _CadastroSerieState createState() => _CadastroSerieState();
+  _DadosSerieState createState() => _DadosSerieState();
 }
 
-class _CadastroSerieState extends State<CadastroSerie> {
+class _DadosSerieState extends State<DadosSerie> {
 
+
+  var buscar;
+  var dados;
+  var titulo, pais, imagem;
+  var carregando = false;
 
   bool _toggleVisibility = true;
 
@@ -31,17 +34,31 @@ class _CadastroSerieState extends State<CadastroSerie> {
   var elenco_principaltxt = new TextEditingController();
   var paistxt = new TextEditingController();
   var ano_lancamentotxt = new TextEditingController();
-  var numero_temptxt = new TextEditingController();
+  var numero_temp = new TextEditingController();
   var imagemtxt = new TextEditingController();
 
 
   GlobalKey<FormState> _formKey = GlobalKey();
 
+  _listarDados() async{
+    final response = await http.get(Uri.parse("http://midiaplus.6te.net/MidiaPlustesdsa/serieselect.php"));
+    final map = json.decode(response.body);
+    final itens = map ["result"];
+    this.dados = itens;
+
+    setState(() {
+      carregando = true;
+      this.dados = itens;
+
+    });
+
+
+  }
   Widget _titulotxt() {
     return TextFormField(
       controller: titulotxt,
       decoration: InputDecoration(
-        hintText: "Titulo da Serie",
+        hintText: "Stranger Things",
         hintStyle: TextStyle(
           color: Color(0xFFBDC2CB),
           fontSize: 18.0,
@@ -50,16 +67,6 @@ class _CadastroSerieState extends State<CadastroSerie> {
       onSaved: (String titulo) {
         _titulo = titulo.trim();
       },
-      validator: (String titulo) {
-        String errorMessage;
-        if (titulo.isEmpty) {
-          errorMessage = "O titulo é requerido";
-        }
-        // if(username.length > 8 ){
-        //   errorMessage = "Your username is too short";
-        // }
-        return errorMessage;
-      },
     );
   }
 
@@ -67,7 +74,7 @@ class _CadastroSerieState extends State<CadastroSerie> {
     return TextFormField(
       controller: diretortxt,
       decoration: InputDecoration(
-        hintText: "Diretor da Serie",
+        hintText: "Matt Duffer",
         hintStyle: TextStyle(
           color: Color(0xFFBDC2CB),
           fontSize: 18.0,
@@ -76,13 +83,6 @@ class _CadastroSerieState extends State<CadastroSerie> {
       onSaved: (String diretor) {
         _diretor = diretor.trim();
       },
-      validator: (String diretor) {
-        String errorMessage;
-        if (diretor.isEmpty) {
-          errorMessage = "O nome do diretor é requerido";
-        }
-        return errorMessage;
-      },
     );
   }
 
@@ -90,7 +90,7 @@ class _CadastroSerieState extends State<CadastroSerie> {
     return TextFormField(
       controller: elenco_principaltxt,
       decoration: InputDecoration(
-        hintText: "Elenco principal",
+        hintText: "Millie Bobby, Finn Wolfhard",
         hintStyle: TextStyle(
           color: Color(0xFFBDC2CB),
           fontSize: 18.0,
@@ -99,13 +99,6 @@ class _CadastroSerieState extends State<CadastroSerie> {
       onSaved: (String elenco_principal) {
         _elenco_principal = elenco_principal.trim();
       },
-      validator: (String elenco_principal) {
-        String errorMessage;
-        if (elenco_principal.isEmpty) {
-          errorMessage = "O elenco é requerido";
-        }
-        return errorMessage;
-      },
     );
   }
 
@@ -113,7 +106,7 @@ class _CadastroSerieState extends State<CadastroSerie> {
     return TextFormField(
       controller: paistxt,
       decoration: InputDecoration(
-        hintText: "pais de lancamento",
+        hintText: "Estados Unidos",
         hintStyle: TextStyle(
           color: Color(0xFFBDC2CB),
           fontSize: 18.0,
@@ -132,11 +125,13 @@ class _CadastroSerieState extends State<CadastroSerie> {
     );
   }
 
+
   Widget _ano_lancamentotxt() {
     return TextFormField(
       controller: ano_lancamentotxt,
       decoration: InputDecoration(
-        hintText: "ano de lancamento",
+
+        hintText: "2016",
         hintStyle: TextStyle(
           color: Color(0xFFBDC2CB),
           fontSize: 18.0,
@@ -145,34 +140,21 @@ class _CadastroSerieState extends State<CadastroSerie> {
       onSaved: (String ano_lancamento) {
         _ano_lancamento = ano_lancamento.trim();
       },
-      validator: (String ano_lancamento) {
-        String errorMessage;
-        if (ano_lancamento.isEmpty) {
-          errorMessage = "O ano de lancamento é requerido";
-        }
-        return errorMessage;
-      },
     );
   }
   Widget _numero_temptxt() {
     return TextFormField(
-      controller: numero_temptxt,
+      controller: ano_lancamentotxt,
       decoration: InputDecoration(
-        hintText: "Numero de Temporada",
+
+        hintText: "3",
         hintStyle: TextStyle(
           color: Color(0xFFBDC2CB),
           fontSize: 18.0,
         ),
       ),
-      onSaved: (String numero_temp) {
-        _numero_temp = numero_temp.trim();
-      },
-      validator: (String numero_temp) {
-        String errorMessage;
-        if (numero_temp.isEmpty) {
-          errorMessage = "O ano de lancamento é requerido";
-        }
-        return errorMessage;
+      onSaved: (String ano_lancamento) {
+        _ano_lancamento = ano_lancamento.trim();
       },
     );
   }
@@ -181,7 +163,7 @@ class _CadastroSerieState extends State<CadastroSerie> {
     return TextFormField(
       controller: imagemtxt,
       decoration: InputDecoration(
-        hintText: "Imagem(.png)",
+        hintText: "avatar01.png",
         hintStyle: TextStyle(
           color: Color(0xFFBDC2CB),
           fontSize: 18.0,
@@ -202,55 +184,6 @@ class _CadastroSerieState extends State<CadastroSerie> {
 
 
 
-  void _inserirDados() async {
-    final response = await http.post(
-        Uri.parse("http://midiaplus.6te.net/MidiaPlustesdsa/inserirserie.php"),
-        body: {
-          "titulo": titulotxt.text,
-          "diretor": diretortxt.text,
-          "elenco_principal": elenco_principaltxt.text,
-          "pais": paistxt.text,
-          "ano_lancamento": ano_lancamentotxt.text,
-          "numero_temp": numero_temptxt.text,
-          "imagem": imagemtxt.text,
-        });
-    final map = json.decode(response.body);
-    final res = map["message"];
-    messagem(res);
-  }
-
-  messagem(res){
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(res),
-      ),
-    );
-
-    if(res == 'Inserido com Sucesso'){
-      titulotxt.text = "";
-      diretortxt.text = "";
-      elenco_principaltxt.text = "";
-      paistxt.text = "";
-      ano_lancamentotxt.text = "";
-      numero_temptxt.text = "";
-      imagemtxt.text = "";
-      Navigator.push(
-
-        context,
-        MaterialPageRoute(builder: (context) => CardSerie()),
-      );
-    }
-    if(res == 'Preencha os Dados'){
-
-    }
-
-
-
-  }
-
-
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -265,7 +198,7 @@ class _CadastroSerieState extends State<CadastroSerie> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Image(
-                  image: AssetImage("assets/imagens/logo.png"),
+                  image: AssetImage("assets/imagens/stranger.png"),
                   height: 120.0,
                   width: 120.0,
                 ),
@@ -312,15 +245,18 @@ class _CadastroSerieState extends State<CadastroSerie> {
                 ),
 
                 GestureDetector(
-                  onTap: () {
-                    _inserirDados();
-                  },
-                  child: Button(
-                    btnText: "Inserir",
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  InserirComentario()));
+                    },
+                    child: Button(
+                      btnText: "Inserir Comentarios",
 
 
-                  ),
-                )
+                    )
+                ),
 
 
               ],
@@ -334,3 +270,6 @@ class _CadastroSerieState extends State<CadastroSerie> {
   }
 
 }
+
+
+

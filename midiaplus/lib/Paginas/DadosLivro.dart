@@ -3,31 +3,32 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:midiaplus/Paginas/CardFilme.dart';
-import '../botao.dart';
 
-import 'package:midiaplus/Paginas/PaginaPrincipal.dart';
-
-class CadastroFilme extends StatefulWidget {
+import 'Insert/insertComentario.dart';
+import 'botao.dart';
+class DadosLivro extends StatefulWidget {
   @override
-  _CadastroFilmeState createState() => _CadastroFilmeState();
+  _DadosLivroState createState() => _DadosLivroState();
 }
 
-class _CadastroFilmeState extends State<CadastroFilme> {
-
+class _DadosLivroState extends State<DadosLivro> {
+  var buscar;
+  var dados;
+  var titulo, pais, imagem;
+  var carregando = false;
 
   bool _toggleVisibility = true;
 
   String _titulo;
-  String _diretor;
-  String _elenco_principal;
+  String _autor;
+  String _editora;
   String _pais;
   String _ano_lancamento;
   String _imagem;
 
   var titulotxt = new TextEditingController();
-  var diretortxt = new TextEditingController();
-  var elenco_principaltxt = new TextEditingController();
+  var autortxt = new TextEditingController();
+  var editoratxt = new TextEditingController();
   var paistxt = new TextEditingController();
   var ano_lancamentotxt = new TextEditingController();
   var imagemtxt = new TextEditingController();
@@ -35,75 +36,57 @@ class _CadastroFilmeState extends State<CadastroFilme> {
 
   GlobalKey<FormState> _formKey = GlobalKey();
 
+  _listarDados() async{
+    final response = await http.get(Uri.parse("http://midiaplus.6te.net/MidiaPlustesdsa/livroselect.php"));
+    final map = json.decode(response.body);
+    final itens = map ["result"];
+    this.dados = itens;
+
+    setState(() {
+      carregando = true;
+      this.dados = itens;
+
+    });
+
+
+  }
   Widget _titulotxt() {
     return TextFormField(
       controller: titulotxt,
       decoration: InputDecoration(
-        hintText: "Titulo do Filme",
+        hintText: "Divergente",
         hintStyle: TextStyle(
           color: Color(0xFFBDC2CB),
           fontSize: 18.0,
         ),
       ),
-      onSaved: (String titulo) {
-        _titulo = titulo.trim();
-      },
-      validator: (String titulo) {
-        String errorMessage;
-        if (titulo.isEmpty) {
-          errorMessage = "O titulo é requerido";
-        }
-        // if(username.length > 8 ){
-        //   errorMessage = "Your username is too short";
-        // }
-        return errorMessage;
-      },
     );
   }
 
   Widget _diretortxt() {
     return TextFormField(
-      controller: diretortxt,
+      controller: autortxt,
       decoration: InputDecoration(
-        hintText: "Diretor do Filme",
+        hintText: "Veronica Roth",
         hintStyle: TextStyle(
           color: Color(0xFFBDC2CB),
           fontSize: 18.0,
         ),
       ),
-      onSaved: (String diretor) {
-        _diretor = diretor.trim();
-      },
-      validator: (String diretor) {
-        String errorMessage;
-        if (diretor.isEmpty) {
-          errorMessage = "O nome do diretor é requerido";
-        }
-        return errorMessage;
-      },
+
     );
   }
 
   Widget _elenco_principaltxt() {
     return TextFormField(
-      controller: elenco_principaltxt,
+      controller: editoratxt,
       decoration: InputDecoration(
-        hintText: "elenco principal",
+        hintText: "Katherine Tegen Books",
         hintStyle: TextStyle(
           color: Color(0xFFBDC2CB),
           fontSize: 18.0,
         ),
       ),
-      onSaved: (String elenco_principal) {
-        _elenco_principal = elenco_principal.trim();
-      },
-      validator: (String elenco_principal) {
-        String errorMessage;
-        if (elenco_principal.isEmpty) {
-          errorMessage = "O elenco é requerido";
-        }
-        return errorMessage;
-      },
     );
   }
 
@@ -111,22 +94,12 @@ class _CadastroFilmeState extends State<CadastroFilme> {
     return TextFormField(
       controller: paistxt,
       decoration: InputDecoration(
-        hintText: "pais de lancamento",
+        hintText: "Estados Unidos",
         hintStyle: TextStyle(
           color: Color(0xFFBDC2CB),
           fontSize: 18.0,
         ),
       ),
-      onSaved: (String pais) {
-        _pais = pais.trim();
-      },
-      validator: (String pais) {
-        String errorMessage;
-        if (pais.isEmpty) {
-          errorMessage = "O pais de lancamento é requerido";
-        }
-        return errorMessage;
-      },
     );
   }
 
@@ -134,7 +107,8 @@ class _CadastroFilmeState extends State<CadastroFilme> {
     return TextFormField(
       controller: ano_lancamentotxt,
       decoration: InputDecoration(
-        hintText: "ano de lancamento",
+
+        hintText: "2011",
         hintStyle: TextStyle(
           color: Color(0xFFBDC2CB),
           fontSize: 18.0,
@@ -143,13 +117,6 @@ class _CadastroFilmeState extends State<CadastroFilme> {
       onSaved: (String ano_lancamento) {
         _ano_lancamento = ano_lancamento.trim();
       },
-      validator: (String ano_lancamento) {
-        String errorMessage;
-        if (ano_lancamento.isEmpty) {
-          errorMessage = "O ano de lancamento é requerido";
-        }
-        return errorMessage;
-      },
     );
   }
 
@@ -157,7 +124,7 @@ class _CadastroFilmeState extends State<CadastroFilme> {
     return TextFormField(
       controller: imagemtxt,
       decoration: InputDecoration(
-        hintText: "Imagem(.png)",
+        hintText: "divergente.png",
         hintStyle: TextStyle(
           color: Color(0xFFBDC2CB),
           fontSize: 18.0,
@@ -178,53 +145,6 @@ class _CadastroFilmeState extends State<CadastroFilme> {
 
 
 
-  void _inserirDados() async {
-    final response = await http.post(
-        Uri.parse("http://midiaplus.6te.net/MidiaPlustesdsa/inserirfilme.php"),
-        body: {
-          "titulo": titulotxt.text,
-          "diretor": diretortxt.text,
-          "elenco_principal": elenco_principaltxt.text,
-          "pais": paistxt.text,
-          "ano_lancamento": ano_lancamentotxt.text,
-          "imagem": imagemtxt.text,
-        });
-    final map = json.decode(response.body);
-    final res = map["message"];
-    messagem(res);
-  }
-
-
-  messagem(res){
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(res),
-      ),
-    );
-
-    if(res == 'Inserido com Sucesso'){
-      titulotxt.text = "";
-      diretortxt.text = "";
-      elenco_principaltxt.text = "";
-      paistxt.text = "";
-      ano_lancamentotxt.text = "";
-      imagemtxt.text = "";
-      Navigator.push(
-
-        context,
-        MaterialPageRoute(builder: (context) => PaginaPrincipal()),
-      );
-    }
-    if(res == 'Preencha os Dados'){
-
-    }
-
-
-
-  }
-
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -239,7 +159,7 @@ class _CadastroFilmeState extends State<CadastroFilme> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Image(
-                  image: AssetImage("assets/imagens/logo.png"),
+                  image: AssetImage("assets/imagens/divergente.png"),
                   height: 120.0,
                   width: 120.0,
                 ),
@@ -281,16 +201,19 @@ class _CadastroFilmeState extends State<CadastroFilme> {
                   height: 20.0,
                 ),
 
-          GestureDetector(
-            onTap: () {
-              _inserirDados();
-            },
-            child: Button(
-              btnText: "Inserir",
+                GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  InserirComentario()));
+                    },
+                    child: Button(
+                      btnText: "Inserir Comentarios",
 
 
-            ),
-          )
+                    )
+                ),
 
 
               ],
@@ -304,4 +227,3 @@ class _CadastroFilmeState extends State<CadastroFilme> {
   }
 
 }
-

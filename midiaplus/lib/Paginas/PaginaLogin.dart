@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
     Future<String> Login(String username, String senha) async {
       var response = await http.get(
           Uri.parse(
-              "http://192.168.178.1/flutter/login.php?username=${username}&senha=${senha}"),
+              "http://midiaplus.6te.net/MidiaPlustesdsa/login.php?username=${username}&senha=${senha}"),
           headers: {"Accept": "application/json"});
       //print(response.body);
 

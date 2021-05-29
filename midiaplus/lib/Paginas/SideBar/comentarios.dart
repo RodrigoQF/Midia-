@@ -3,17 +3,16 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:midiaplus/Paginas/PaginaPrincipal.dart';
 
-import 'DadosLivro.dart';
-import 'Insert/InsertLivro.dart';
-import 'botao.dart';
+import '../botao.dart';
 
-class CardLivro extends StatefulWidget {
+class ComentariosPage extends StatefulWidget {
   @override
-  _CardLivroState createState() => _CardLivroState();
+  _ComentariosPageState createState() => _ComentariosPageState();
 }
 
-class _CardLivroState extends State<CardLivro> {
+class _ComentariosPageState extends State<ComentariosPage> {
 
   var buscar;
   var dados;
@@ -21,11 +20,10 @@ class _CardLivroState extends State<CardLivro> {
   var carregando = false;
 
   _listarDados() async{
-    final response = await http.get(Uri.parse("http://midiaplus.6te.net/MidiaPlustesdsa/listarlivro.php"));
+    final response = await http.get(Uri.parse("http://midiaplus.6te.net/MidiaPlustesdsa/listarcomentario.php"));
     final map = json.decode(response.body);
     final itens = map ["result"];
     this.dados = itens;
-
 
     setState(() {
       carregando = true;
@@ -33,8 +31,8 @@ class _CardLivroState extends State<CardLivro> {
 
     });
 
-  }
 
+  }
 
   @override
   void initState(){
@@ -52,10 +50,7 @@ class _CardLivroState extends State<CardLivro> {
       ),
       child: Stack(
         children: <Widget>[
-
-
           Container(
-
 
               height: 600.0,
               width: 400.0,
@@ -68,32 +63,31 @@ class _CardLivroState extends State<CardLivro> {
                     print(item);
 
                     return new Container(
-                      margin: EdgeInsets.only(bottom: 15, left: 40, top: 10),
-
+                      margin: EdgeInsets.only(bottom: 15, left: 20, top: 10),
                       child: Stack(
                         children: <Widget>[
                           FlatButton(
                             onPressed: () {
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          DadosLivro()));
+                                      //builder: (BuildContext context) =>
+                                         // print(carregando);
+                                  ));
                             },
                             child: Image(
 
-                              image: AssetImage('assets/imagens/' + item['imagem'],
-
-                              ),
+                              image: AssetImage('assets/imagens/black.png'),
                               fit: BoxFit.cover,
                             ),
                           ),
+
+
                           Positioned(
                             left: 0.0,
                             bottom: 0.0,
                             width: 240.0,
                             height: 50.0,
                             child: Container(
-
                               decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                       begin: Alignment.bottomCenter,
@@ -102,9 +96,9 @@ class _CardLivroState extends State<CardLivro> {
                             ),
                           ),
                           Positioned(
-                            left: 10.0,
-                            bottom: 10.0,
-                            right: 10.0,
+                            left: 50.0,
+                            bottom: 50.0,
+                            right: 50.0,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
@@ -118,71 +112,51 @@ class _CardLivroState extends State<CardLivro> {
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white),
                                     ),
-                                    Row(
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.star,
-                                          color: Theme.of(context).primaryColor,
-                                          size: 16.0,
-                                        ),
-                                        Icon(
-                                          Icons.star,
-                                          color: Theme.of(context).primaryColor,
-                                          size: 16.0,
-                                        ),
-                                        Icon(
-                                          Icons.star,
-                                          color: Theme.of(context).primaryColor,
-                                          size: 16.0,
-                                        ),
-                                        Icon(
-                                          Icons.star,
-                                          color: Theme.of(context).primaryColor,
-                                          size: 16.0,
-                                        ),
-                                        Icon(
-                                          Icons.star,
-                                          color: Theme.of(context).primaryColor,
-                                          size: 16.0,
-                                        ),
-                                        SizedBox(
-                                          width: 10.0,
-                                        ),
-                                        Text(
-                                          item["autor"],
-                                          style: TextStyle(color: Colors.grey),
-                                        ),
-                                      ],
+                                    SizedBox(
+                                      height: 10,
                                     ),
+                                    Text(
+                                      item['comentario'],
+                                      style: TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      item['avaliacao'],
+                                      style: TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+
                                   ],
                                 ),
-                    GestureDetector(
-                    onTap: () {
-                    Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                    CadastroLivro()));
-                    },
-                    child: Button(
-                    btnText: "Inserir Livro",
+                                GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  PaginaPrincipal()));
+                                    },
+                                    child: Button(
+                                      btnText: "Pagina Inicial",
 
 
-                    )
-                    ),
-
-
+                                    )
+                                ),
                               ],
                             ),
-
                           ),
-
-
-
 
 
                         ],
                       ),
                     );
+
                   }
               )
 

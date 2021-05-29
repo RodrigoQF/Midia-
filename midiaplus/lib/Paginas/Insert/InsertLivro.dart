@@ -180,7 +180,7 @@ class _CadastroLivroState extends State<CadastroLivro> {
 
   void _inserirDados() async {
     final response = await http.post(
-        Uri.parse("http://192.168.178.1/flutter/inserirlivro.php"),
+        Uri.parse("http://midiaplus.6te.net/MidiaPlustesdsa/inserirlivro.php"),
         body: {
           "titulo": titulotxt.text,
           "autor": autortxt.text,

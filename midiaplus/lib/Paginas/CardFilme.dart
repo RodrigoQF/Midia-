@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'DadosFilme.dart';
 import 'Insert/InsertFilme.dart';
 import 'dart:async';
 
@@ -25,7 +26,7 @@ class _CardFilmeState extends State<CardFilme> {
   var carregando = false;
 
   _listarDados() async{
-    final response = await http.get(Uri.parse("http://192.168.178.1/flutter/listarfilme.php"));
+    final response = await http.get(Uri.parse("http://midiaplus.6te.net/MidiaPlustesdsa/listarfilme.php"));
     final map = json.decode(response.body);
     final itens = map ["result"];
     this.dados = itens;
@@ -81,7 +82,7 @@ class _CardFilmeState extends State<CardFilme> {
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      CadastroPage()));
+                                      DadosFilme()));
                         },
                         child: Image(
 
@@ -156,26 +157,24 @@ class _CardFilmeState extends State<CardFilme> {
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              height: 50.0,
-                            ),
-                            GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              CadastroFilme()));
-                                },
-                                child: Button(
-                                  btnText: "Inserir Filme",
+                GestureDetector(
+                onTap: () {
+                Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                builder: (BuildContext context) =>
+                CadastroFilme()));
+                },
+                child: Button(
+                btnText: "Inserir Filme",
 
 
-                                )
-                            ),
-
+                )
+                ),
                           ],
                         ),
                       ),
+
+
                     ],
                   ),
                 );

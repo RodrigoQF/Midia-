@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:midiaplus/Paginas/Insert/InsertSerie.dart';
+import 'package:midiaplus/Paginas/PaginaLogin.dart';
 
+import 'DadosSerie.dart';
 import 'botao.dart';
 
 class CardSerie extends StatefulWidget {
@@ -20,7 +22,7 @@ class _CardFilmeState extends State<CardSerie> {
   var carregando = false;
 
   _listarDados() async{
-    final response = await http.get(Uri.parse("http://192.168.178.1/flutter/listarserie.php"));
+    final response = await http.get(Uri.parse("http://midiaplus.6te.net/MidiaPlustesdsa/listarserie.php"));
     final map = json.decode(response.body);
     final itens = map ["result"];
     this.dados = itens;
@@ -69,12 +71,22 @@ class _CardFilmeState extends State<CardSerie> {
                       margin: EdgeInsets.only(bottom: 15, left: 10, top: 10),
                       child: Stack(
                         children: <Widget>[
-                          Image(
-                            image: AssetImage('assets/imagens/' + item['imagem'],
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          DadosSerie()));
+                            },
+                            child: Image(
 
+                              image: AssetImage('assets/imagens/' + item['imagem'],
+
+                              ),
+                              fit: BoxFit.cover,
                             ),
-                            fit: BoxFit.cover,
                           ),
+
                           Positioned(
                             left: 0.0,
                             bottom: 0.0,
@@ -160,17 +172,24 @@ class _CardFilmeState extends State<CardSerie> {
                               ],
                             ),
                           ),
+
                         ],
+
                       ),
                     );
+
                   }
               )
 
-          )
+
+
+
+          ),
 
         ],
       ),
     );
+
   }
 
 }

@@ -196,7 +196,7 @@ class _CadastroPageState extends State<CadastroPage> {
 
     void _inserirDados() async {
       final response = await http.post(
-          Uri.parse("http://192.168.178.1/flutter/inserirusuario.php"),
+          Uri.parse("http://midiaplus.6te.net/MidiaPlustesdsa/inserirusuario.php"),
           body: {
             "nome_completo": nome_completotxt.text,
             "username": usernametxt.text,
