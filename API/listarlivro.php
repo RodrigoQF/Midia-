@@ -3,22 +3,26 @@
 include_once("conexao.php");
 
 
+$sql  = "SELECT * FROM livro";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+
+
 
 $dados = array();
-$query = $pdo->query("SELECT * FROM LIVRO");
-$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 for ($i=0; $i < count($res); $i++) { 
+
       foreach ($res[$i] as $key => $value) {}
 
-      	$dados = $res;
-
+          $dados = $res;
 
 }
 
 echo ($res) ?
 json_encode(array("code" => 1, "result"=>$dados)) : 
-json_encode(array("code" => 0, "result"=>"Dados não encontrados!")) 
+json_encode(array("code" => 0, "result"=>"Dados nÃ£o encontrados!")) 
 
  ?>

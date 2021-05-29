@@ -23,7 +23,7 @@ if($nome_completo == @$nome_completo_recup){
 }
 
 if($username == @$username_recup){
-    echo(json_encode(array("message"=>'Username já Cadastrado')));
+    echo(json_encode(array("message"=>'Username ja Cadastrado')));
     exit();
 }
 

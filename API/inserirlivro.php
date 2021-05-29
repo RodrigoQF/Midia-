@@ -12,7 +12,7 @@ $imagem = $_POST['imagem'];
 
 
 
-if($titulo == '' or $autor == '' or $editora == '' or $pais == '' or $ano_lancamento == '' or $imagem == ''){
+if($titulo == '' or $autor == '' or $editora == '' or $pais == '' or $ano_lancamento == ''){
 	echo(json_encode(array("message"=>'Preencha os Dados')));
 	exit();
 }
