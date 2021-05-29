@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:midiaplus/Paginas/PaginaPrincipal.dart';
 import 'PaginaLogin.dart';
 import 'botao.dart';
 
@@ -228,7 +229,7 @@ class _CadastroPageState extends State<CadastroPage> {
         Navigator.push(
 
           context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
+          MaterialPageRoute(builder: (context) => PaginaPrincipal()),
         );
       }
       if(res == 'Preencha os Dados'){
