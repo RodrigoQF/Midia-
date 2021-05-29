@@ -190,16 +190,6 @@ class _InserirComentarioState extends State<InserirComentario> {
                   height: 20.0,
                 ),
 
-                GestureDetector(
-                    onTap: () {
-                      _inserirDados();
-                    },
-                    child: Button(
-                      btnText: "Inserir",
-
-
-                    )
-                ),
                 Divider(
                   height: 20.0,
                 ),
@@ -209,12 +199,17 @@ class _InserirComentarioState extends State<InserirComentario> {
                   children: <Widget>[
                     SizedBox(width: 10.0),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    ComentariosPage()));
-                      },
+                        onTap: () {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      ComentariosPage()));
+                        },
+                        child: Button(
+                          btnText: "Inserir Comentarios",
+
+
+                        )
                     ),
                   ],
                 ),

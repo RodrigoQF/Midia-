@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget{
     return MaterialApp(
       title: 'Midia+',
       theme: ThemeData(primarySwatch: Colors.deepOrange),
-      home: LoginPage(),
+      home: PaginaPrincipal(),
 
     );
 

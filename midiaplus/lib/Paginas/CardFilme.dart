@@ -40,11 +40,6 @@ class _CardFilmeState extends State<CardFilme> {
 
   }
 
-
-
-
-
-
   @override
   void initState(){
     // TODO: implement initState

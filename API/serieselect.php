@@ -2,18 +2,16 @@
 
 include_once("conexao.php");
 
-
-
 $dados = array();
-$query = $pdo->query("SELECT * FROM FILME");
+$query = $pdo->query("SELECT * FROM serie where titulo = 'Stranger Things'");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
 
 
 for ($i=0; $i < count($res); $i++) { 
+
       foreach ($res[$i] as $key => $value) {}
 
-      	$dados = $res;
-
+          $dados = $res;
 
 }
 

@@ -41,10 +41,10 @@ $res = $pdo->prepare("INSERT into usuario (nome_completo, username, senha, data_
 
 
  if($res){
- 	echo(json_encode(array("code" => 1, "message"=>'Inserido com Sucesso')));
+ 	echo(json_encode(array("message"=>'Inserido com Sucesso')));
  }
 else{
-  echo(json_encode(array("code" => 1, "message"=>'Nao inserido')));  
+  echo(json_encode(array("message"=>'Nao inserido')));  
 }
  
 
